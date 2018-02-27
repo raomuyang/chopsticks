@@ -1,0 +1,45 @@
+package cn.atomicer.chopsticks.common;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Created by rao-mengnan
+ * on 2017/3/17.
+ */
+public class StringUtils {
+    private static final String FULL_WIDTH_CHARACTER = "[\\uFF00-\\uFFFF]|[\\u3000-\\u303F]";
+    private static final String FULL_WIDTH_CHARACTER_REG = ".*?(" + FULL_WIDTH_CHARACTER + "+).*?";
+    private static final Pattern FULL_WIDTH_CHARACTERS_PATTERN = Pattern.compile(FULL_WIDTH_CHARACTER_REG);
+
+    private static final Pattern INTEGER_PATTERN;
+    static {
+        INTEGER_PATTERN = Pattern.compile("^[0-9]*");
+    }
+
+
+    /**
+     * 全角字符匹配器
+     *
+     * @param str 匹配字符串
+     * @return matcher
+     */
+    public static Matcher getFullWidthCharacterMatcher(String str) {
+        return FULL_WIDTH_CHARACTERS_PATTERN.matcher(str);
+    }
+
+    public static boolean existingFullWidthCharacters(String str) {
+        return getFullWidthCharacterMatcher(str).matches();
+    }
+
+    public static String replaceAllFullWidthCharacters(String str, String replacement) {
+        if (str == null) {
+            return null;
+        }
+        return str.replaceAll(FULL_WIDTH_CHARACTER, replacement);
+    }
+
+    public static boolean isInteger(String str) {
+        return (str != null && str.length() > 0) && INTEGER_PATTERN.matcher(str).matches();
+    }
+}
