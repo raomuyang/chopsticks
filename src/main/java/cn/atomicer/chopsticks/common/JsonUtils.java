@@ -28,6 +28,12 @@ public class JsonUtils {
         return new Gson().fromJson(e, clazz);
     }
 
+    /**
+     * 将json转换为 String/Number/Map 数组
+     * eg. [{"a": 1}, {"b": 2}] -> List[Map{"a": 1}, Map{"b": 2}]
+     * @param jsonStr ["a", "b"]
+     * @return List["a", "b"]
+     */
     @SuppressWarnings("unchecked")
     public static List mapToList(String jsonStr) {
         List list;
