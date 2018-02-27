@@ -39,7 +39,7 @@ public class BufferUtils {
         }
     }
 
-    public static byte[] getMD5Digits(File file) throws IOException {
+    public static byte[] getFileMD5Digits(File file) throws IOException {
         FileInputStream inputStream = new FileInputStream(file);
         FileChannel channel = inputStream.getChannel();
         try {
@@ -60,11 +60,20 @@ public class BufferUtils {
             }
             return messagedigest.digest();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         } finally {
             channel.close();
             inputStream.close();
+        }
+    }
+
+    public static byte[] getStringMD5Digits(String str) {
+        try {
+            MessageDigest messagedigest = MessageDigest.getInstance("MD5");
+            messagedigest.update(str.getBytes());
+            return messagedigest.digest();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 
