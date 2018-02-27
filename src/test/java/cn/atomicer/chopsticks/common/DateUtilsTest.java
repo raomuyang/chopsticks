@@ -42,7 +42,7 @@ public class DateUtilsTest {
     @Test
     public void getDateAfterXDay() throws Exception {
         Date date = new Date();
-        assertEquals(date.getTime() + TimeUnit.DAYS.toDays(1),
+        assertEquals(date.getTime() + TimeUnit.DAYS.toMillis(1),
                 DateUtils.getDateAfterXDay(new Timestamp(date.getTime()), 1).getTime());
     }
 
@@ -50,7 +50,7 @@ public class DateUtilsTest {
     @Test
     public void formatTimeStamp() throws Exception {
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.DEFAULT_DATE_FORMAT, Locale.CHINA);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.DEFAULT_DATE_FORMAT, Locale.ENGLISH);
         String f = DateUtils.formatTimeStamp(date.getTime());
         assertEquals(dateFormat.format(date), f);
     }
