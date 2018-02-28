@@ -1,6 +1,8 @@
 package cn.atomicer.chopsticks.io;
 
+import javax.imageio.IIOException;
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,8 +73,9 @@ public class FileUtils {
 
     /**
      * write byte array into file (overwrite)
-     * @param path target path
-     * @param name target file name
+     *
+     * @param path  target path
+     * @param name  target file name
      * @param bytes src bytes
      * @return successful
      */
@@ -100,4 +103,41 @@ public class FileUtils {
         Files.move(source, target);
     }
 
+    public static void copy(File source, File dest) throws IOException {
+        copy(source, dest, true);
+    }
+
+    public static void copy(File source, File dest, boolean preserveFileDate) throws IOException {
+        if (source.isDirectory()) {
+            throw new IOException(String.format("source: not a file [%s] ", source.getPath()));
+        } else {
+            File parent = dest.getParentFile();
+            if (parent != null && !parent.mkdirs() && !parent.isDirectory()) {
+                throw new IOException(String.format("destination: parent directory create failed [%s]", parent.getPath()));
+            } else if (dest.exists() && !dest.canWrite()) {
+                throw new IOException(String.format("destination: file can't write [%s]", dest.getPath()));
+            } else {
+                copyFile(source, dest, preserveFileDate);
+            }
+        }
+    }
+
+    static void copyFile(File source, File dest, boolean preserveFileDate) throws IOException {
+        try (FileInputStream in = new FileInputStream(source);
+             FileOutputStream out = new FileOutputStream(dest)) {
+            FileChannel inChan = in.getChannel();
+            FileChannel outChan = out.getChannel();
+            long position = 0;
+            long fileSize = source.length();
+            while (true) {
+                long write = inChan.transferTo(position, fileSize, outChan);
+                if (write == 0) break;
+                position += write;
+            }
+        }
+
+        if (source.length() != dest.length())
+            throw new IOException("copy failed: file length doesn't equals");
+        if (preserveFileDate) dest.setLastModified(source.lastModified());
+    }
 }

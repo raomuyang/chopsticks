@@ -15,6 +15,9 @@ import static org.junit.Assert.*;
  * on 2018/2/28.
  */
 public class FileUtilsTest {
+
+    private static final String RESOURCE_PATH = FileUtilsTest.class.getResource("/").getPath();
+
     @Test
     public void testReadAndWriteObject() throws IOException {
         ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue();
@@ -45,7 +48,7 @@ public class FileUtilsTest {
         Assert.assertEquals(false, FileUtils.isSymlink(new File(invalid)));
 
         // 判断有效的文件路径
-        String valid = root + File.separator + "test.fq";
+        String valid = root + File.separator + "test.file";
         Assert.assertEquals(false, FileUtils.isSymlink(new File(valid)));
 
         // 判断链接文件
@@ -94,6 +97,37 @@ public class FileUtilsTest {
 
     @Test
     public void rename() throws Exception {
+
+    }
+
+    @Test
+    public void testCopy() throws IOException {
+        File src = new File(RESOURCE_PATH + File.separator + "test.file");
+        File dest = new File(RESOURCE_PATH + File.separator + "/tmp/test.file");
+        try {
+            assertFalse(dest.exists());
+            assertFalse(dest.getParentFile().exists());
+
+            FileUtils.copy(src, dest);
+            assertEquals(src.lastModified(), dest.lastModified());
+            assertEquals(BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(src)),
+                    BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(dest)));
+
+            FileUtils.copy(src, dest, true);
+            assertEquals(src.lastModified(), dest.lastModified());
+            assertEquals(BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(src)),
+                    BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(dest)));
+
+            FileUtils.copy(src, dest, false);
+            assertEquals(BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(src)),
+                    BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(dest)));
+            assertNotEquals(src.lastModified(), dest.lastModified());
+
+
+        } finally {
+            dest.delete();
+            dest.getParentFile().delete();
+        }
 
     }
 
