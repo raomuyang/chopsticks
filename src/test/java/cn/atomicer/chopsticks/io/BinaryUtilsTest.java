@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * Created by Rao-Mengnan
  * on 2018/2/28.
  */
-public class BufferUtilsTest {
+public class BinaryUtilsTest {
     private static File FILE = new File("test=buf-unit-test.test");
     private static final String MESSAGE = "BufferUtilsTest";
 
@@ -35,14 +35,14 @@ public class BufferUtilsTest {
 
     @Test
     public void getMD5Digits() throws Exception {
-        byte[] digest1 = BufferUtils.getFileMD5Digits(FILE);
-        byte[] digest2 = BufferUtils.getStringMD5Digits(MESSAGE);
-        assertEquals(BufferUtils.buffer2HexStr(digest1), BufferUtils.buffer2HexStr(digest2));
+        byte[] digest1 = BinaryUtils.getFileMD5Digits(FILE);
+        byte[] digest2 = BinaryUtils.getStringMD5Digits(MESSAGE);
+        assertEquals(BinaryUtils.buffer2HexStr(digest1), BinaryUtils.buffer2HexStr(digest2));
     }
 
     @Test
     public void getBytes() throws Exception {
-        byte[] buf1 = BufferUtils.getBytes(FILE);
+        byte[] buf1 = BinaryUtils.getBytes(FILE);
         byte[] buf2 = MESSAGE.getBytes();
         String str1 = new String(buf1);
         String str2 = new String(buf2);
@@ -51,11 +51,11 @@ public class BufferUtilsTest {
 
     @Test
     public void testBufConvert() throws Exception {
-        byte[] digest = BufferUtils.getFileMD5Digits(FILE);
+        byte[] digest = BinaryUtils.getFileMD5Digits(FILE);
         assertEquals(new String(digest),
                 new String(
-                        BufferUtils.hexStrToByteArray(
-                                BufferUtils.buffer2HexStr(digest))));
+                        BinaryUtils.hexStrToByteArray(
+                                BinaryUtils.buffer2HexStr(digest))));
     }
 
 }

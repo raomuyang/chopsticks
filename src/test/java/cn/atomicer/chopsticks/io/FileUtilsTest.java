@@ -101,17 +101,17 @@ public class FileUtilsTest {
 
             FileUtils.copy(src, dest);
             assertEquals(src.lastModified(), dest.lastModified());
-            assertEquals(BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(src)),
-                    BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(dest)));
+            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(src)),
+                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(dest)));
 
             FileUtils.copy(src, dest, true);
             assertEquals(src.lastModified(), dest.lastModified());
-            assertEquals(BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(src)),
-                    BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(dest)));
+            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(src)),
+                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(dest)));
 
             FileUtils.copy(src, dest, false);
-            assertEquals(BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(src)),
-                    BufferUtils.buffer2HexStr(BufferUtils.getFileMD5Digits(dest)));
+            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(src)),
+                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(dest)));
             assertNotEquals(src.lastModified(), dest.lastModified());
 
 
@@ -128,7 +128,7 @@ public class FileUtilsTest {
         tmp.deleteOnExit();
         String msg = "test";
         FileUtils.writeIntoFile(tmp.getParent(), tmp.getName(), msg.getBytes());
-        assertEquals(msg, new String(BufferUtils.getBytes(tmp)));
+        assertEquals(msg, new String(BinaryUtils.getBytes(tmp)));
     }
 
     @Test

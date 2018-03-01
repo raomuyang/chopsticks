@@ -24,7 +24,7 @@ public class EncryptionUtil {
         byte[] result;
         try {
             result = desEncrypt(message.getBytes("UTF-8"), key);
-            return BufferUtils.buffer2HexStr(result);
+            return BinaryUtils.buffer2HexStr(result);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
@@ -50,7 +50,7 @@ public class EncryptionUtil {
      * @return 返回解密后的字符串
      */
     public static String desDecrypt(String hexString, String key) throws BadPaddingException, IllegalBlockSizeException {
-        byte[] bytes = BufferUtils.hexStrToByteArray(hexString);
+        byte[] bytes = BinaryUtils.hexStrToByteArray(hexString);
         return new String(desDecrypt(bytes, key));
     }
 
