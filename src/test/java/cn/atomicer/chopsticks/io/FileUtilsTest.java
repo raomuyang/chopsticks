@@ -91,16 +91,6 @@ public class FileUtilsTest {
     }
 
     @Test
-    public void writeIntoFile() throws Exception {
-
-    }
-
-    @Test
-    public void rename() throws Exception {
-
-    }
-
-    @Test
     public void testCopy() throws IOException {
         File src = new File(RESOURCE_PATH + File.separator + "test.file");
         File dest = new File(RESOURCE_PATH + File.separator + "/tmp/test.file");
@@ -129,6 +119,35 @@ public class FileUtilsTest {
             dest.getParentFile().delete();
         }
 
+    }
+
+    @Test
+    public void writeIntoFile() throws Exception {
+        File tmp = new File(RESOURCE_PATH + File.separator + "test-write");
+        tmp.deleteOnExit();
+        String msg = "test";
+        FileUtils.writeIntoFile(tmp.getParent(), tmp.getName(), msg.getBytes());
+        assertEquals(msg, new String(BufferUtils.getBytes(tmp)));
+    }
+
+    @Test
+    public void rename() throws Exception {
+        File src = new File(RESOURCE_PATH + File.separator + "test.file");
+        File dest = new File(RESOURCE_PATH + File.separator + "test.file-2");
+        File tmpDir = new File(RESOURCE_PATH + File.separator + "tmp");
+        tmpDir.mkdirs();
+        try {
+            FileUtils.copy(src, dest, true);
+            File renamed = new File(RESOURCE_PATH + "/tmp/rename");
+            FileUtils.rename(dest.getPath(), renamed.getPath());
+            assertFalse(dest.exists());
+            assertTrue(renamed.exists());
+            renamed.deleteOnExit();
+
+        } finally {
+            dest.delete();
+            tmpDir.delete();
+        }
     }
 
 }
