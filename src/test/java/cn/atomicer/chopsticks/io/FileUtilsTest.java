@@ -94,6 +94,7 @@ public class FileUtilsTest {
     public void testCopy() throws IOException {
         File src = new File(RESOURCE_PATH + File.separator + "test.file");
         File dest = new File(RESOURCE_PATH + File.separator + "/tmp/test.file");
+        dest.getParentFile().delete();
         try {
             assertFalse(dest.exists());
             assertFalse(dest.getParentFile().exists());
