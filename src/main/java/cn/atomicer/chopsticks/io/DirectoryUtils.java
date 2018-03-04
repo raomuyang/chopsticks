@@ -15,7 +15,6 @@ public class DirectoryUtils {
     private boolean excludeDir;
 
     /**
-     *
      * @param path root path
      * @return node list, exclude directory
      */

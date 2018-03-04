@@ -122,7 +122,7 @@ public class FileUtils {
         }
     }
 
-    static void copyFile(File source, File dest, boolean preserveFileDate) throws IOException {
+    private static void copyFile(File source, File dest, boolean preserveFileDate) throws IOException {
         try (FileInputStream in = new FileInputStream(source);
              FileOutputStream out = new FileOutputStream(dest)) {
             FileChannel inChan = in.getChannel();
