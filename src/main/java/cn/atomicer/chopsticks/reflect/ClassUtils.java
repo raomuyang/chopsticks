@@ -9,17 +9,17 @@ import java.util.Map;
  * Created by Rao-Mengnan
  * on 2017/10/23.
  */
-public class ClassUtil {
+public class ClassUtils {
 
     private static final String UTILS_CLASS = "Date|List|Map";
-    private static final Map<String, Class> CLASS_MAP;
+    static final Map<String, Class> CLASS_MAP;
 
     static {
         CLASS_MAP = new HashMap<>();
         CLASS_MAP.put("int[]", int[].class);
         CLASS_MAP.put("double[]", double[].class);
         CLASS_MAP.put("float[]", float[].class);
-        CLASS_MAP.put("short", short[].class);
+        CLASS_MAP.put("short[]", short[].class);
         CLASS_MAP.put("byte[]", byte[].class);
         CLASS_MAP.put("char[]", char[].class);
         CLASS_MAP.put("Integer[]", Integer[].class);
@@ -44,6 +44,9 @@ public class ClassUtil {
         return JsonUtils.mapToBean(o.toString(), clazz);
     }
 
+    public static Class str2Class(String type) throws ClassNotFoundException {
+        return str2Class(type, null);
+    }
     /**
      * @param type        name of class. If it is the base type,
      *                    you can get class via long name or short name:
@@ -56,11 +59,11 @@ public class ClassUtil {
         if (type == null) {
             return String.class;
         }
-        if (classLoader == null) classLoader = ClassUtil.class.getClassLoader();
+        if (classLoader == null) classLoader = ClassUtils.class.getClassLoader();
         type = format(type);
         try {
             Class clazz;
-            if (type.contains("["))
+            if (type.endsWith("]"))
                 clazz = CLASS_MAP.get(type);
             else
                 clazz = classLoader.loadClass(type);
@@ -81,7 +84,7 @@ public class ClassUtil {
      * @param type {@link java.lang} {@link java.util.Date}
      * @return {@link Number} or {@link java.util.Date}
      */
-    private static String format(String type) {
+    static String format(String type) {
         if (type.contains(".") || type.contains("["))
             return type;
 
