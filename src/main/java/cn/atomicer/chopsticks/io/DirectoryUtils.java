@@ -6,22 +6,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Rao-Mengnan
- * on 2018/1/24.
+ * The tools of directory, include get the struct of directory
+ * and delete directory recursion
+ *
+ * @author Rao-Mengnan
+ *         on 2018/1/24.
  */
 public class DirectoryUtils {
 
     private boolean excludeFile;
-    private boolean excludeDir;
+    private boolean excludeFolder;
 
     /**
+     * Get the struct of directory, exclude folders
+     *
      * @param path root path
-     * @return node list, exclude directory
+     * @return node list
      */
     public static List<SubFile> directoryStruct(String path) {
-        return create().filterDirectory().getSubFiles(path);
+        return create().filterFolder().getSubFiles(path);
     }
 
+    /**
+     * Delete directory recursion, if the target is the file will be deleted as well
+     *
+     * @param path target path
+     * @throws IOException directory delete failed, may be the target path can't write
+     */
     public static void deleteDirectory(String path) throws IOException {
         File file = new File(path);
         if (!file.exists()) return;
@@ -43,13 +54,23 @@ public class DirectoryUtils {
         return new DirectoryUtils();
     }
 
+    /**
+     * Result exclude files
+     *
+     * @return self
+     */
     public DirectoryUtils filterFile() {
         excludeFile = true;
         return this;
     }
 
-    public DirectoryUtils filterDirectory() {
-        excludeDir = true;
+    /**
+     * Result exclude folders
+     *
+     * @return self
+     */
+    public DirectoryUtils filterFolder() {
+        excludeFolder = true;
         return this;
     }
 
@@ -62,6 +83,15 @@ public class DirectoryUtils {
         }
     }
 
+    /**
+     * Get all sub-files, default include files and folders, you can ignore files or ignore folders
+     * by filter:
+     *
+     * @param path target path
+     * @return list of {@link SubFile} which include all the files/folders of result
+     * @see DirectoryUtils#filterFile()
+     * @see DirectoryUtils#filterFolder()
+     */
     public List<SubFile> getSubFiles(String path) {
         return getSubFiles(path, "");
     }
@@ -79,7 +109,7 @@ public class DirectoryUtils {
         } else {
             // exclude root path
             if (parent != null && !"".equals(parent)) {
-                if (!excludeDir) nodes.add(subNode);
+                if (!excludeFolder) nodes.add(subNode);
             }
 
             File[] subFiles = file.listFiles();
@@ -93,11 +123,27 @@ public class DirectoryUtils {
         return nodes;
     }
 
+    /**
+     * Attributes of sub file
+     */
     public static class SubFile {
+        /**
+         * The file path relative to the root directory:
+         * {@code root/parent/name}  equals  {@code path}
+         */
         String parent = "";
+        /**
+         * file name
+         */
         String name;
 
+        /**
+         * is file: true, otherwise: false
+         */
         boolean fileType;
+        /**
+         * absolute path of this file
+         */
         String path;
 
         SubFile(String parent) {
@@ -131,7 +177,7 @@ public class DirectoryUtils {
         }
 
         /**
-         * @return 从根目录开始的相对路径
+         * @return {@link SubFile#parent}
          */
         @Override
         public String toString() {

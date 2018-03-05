@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by raomengnan on 17-1-10.
  * 通过反射调用指定的方法
+ * Invoke the methods specified by reflection
+ *
+ * @author Rao Mengnan
+ *         on 17-1-10.
  */
 public class ReflectInvoke {
 
@@ -36,11 +39,16 @@ public class ReflectInvoke {
 
     /**
      * 调用无参方法
+     * Invoke non parameter method
      *
-     * @param clazz      目标类
-     * @param instance   目标类对象
-     * @param methodName 调用方法名
-     * @return 返回调用结果
+     * @param clazz      调用的类    target class
+     * @param instance   调用的对象  instance of clazz
+     * @param methodName 调用方法名  method of clazz
+     * @return 调用结果  result of invoke
+     * @throws NoSuchMethodException     没有此方法或者该方法有参数
+     *                                   no such method or the method should have parameters
+     * @throws InvocationTargetException an exception has occurred during perform this method
+     * @throws IllegalAccessException    access to private or protected methods
      */
     @SuppressWarnings("unchecked")
     public static Object invoke(Class clazz, Object instance, String methodName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -49,12 +57,21 @@ public class ReflectInvoke {
 
     /**
      * @param clazz      目标类
+     *                   target class
      * @param instance   目标类对象
+     *                   target class object
      * @param methodName 调用方法名
-     * @param args       <p>目标方法的参数，当目标方法的参数有多个时，必须以 new Object[]{param1, param2, param3...}的形式传入</>
-     *                   <p>注意目标方法的参数为基本类型的数组或可变长参数时，务必不要与包装类型数组混用，</>
-     *                   <p>否则会抛出NoSuchMethodException的异常</>
-     * @return 方法调用结果
+     *                   the method name of invoke
+     * @param args       目标方法的参数，当目标方法的参数有多个时，必须以 new Object[]{param1, param2, param3...}的形式传入
+     *                   注意目标方法的参数为基本类型的数组或可变长参数时，务必不要与包装类型数组混用,
+     *                   否则会抛出NoSuchMethodException的异常
+     *                   The target method's parameters, when the target method has multiple parameters, must be in the form of new Object [] {param1, param2, param3 ...}
+     *                   Note that when the argument of the target method is an array of primitive types or a variable length argument, be sure not to mix it with an array of wrapper types,
+     *                   otherwise a NoSuchMethodException will be thrown
+     * @return 调用结果  result of invoke
+     * @throws NoSuchMethodException     method not found
+     * @throws InvocationTargetException an exception has occurred during perform this method
+     * @throws IllegalAccessException    access to private or protected methods
      */
     @SuppressWarnings("unchecked")
     public static Object invoke(Class clazz, Object instance, String methodName, Object... args) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {

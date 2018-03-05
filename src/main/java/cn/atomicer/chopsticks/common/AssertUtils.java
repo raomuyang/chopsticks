@@ -1,8 +1,8 @@
 package cn.atomicer.chopsticks.common;
 
 /**
- * Created by Rao-Mengnan
- * on 2018/2/27.
+ * @author Rao Mengnan
+ *         on 2018/2/27.
  */
 public class AssertUtils {
 

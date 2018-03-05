@@ -35,8 +35,8 @@ public class BinaryUtilsTest {
 
     @Test
     public void getMD5Digits() throws Exception {
-        byte[] digest1 = BinaryUtils.getFileMD5Digits(FILE);
-        byte[] digest2 = BinaryUtils.getStringMD5Digits(MESSAGE);
+        byte[] digest1 = BinaryUtils.getFileMD5Digest(FILE);
+        byte[] digest2 = BinaryUtils.getStringMD5Digests(MESSAGE);
         assertEquals(BinaryUtils.buffer2HexStr(digest1), BinaryUtils.buffer2HexStr(digest2));
     }
 
@@ -51,7 +51,7 @@ public class BinaryUtilsTest {
 
     @Test
     public void testBufConvert() throws Exception {
-        byte[] digest = BinaryUtils.getFileMD5Digits(FILE);
+        byte[] digest = BinaryUtils.getFileMD5Digest(FILE);
         assertEquals(new String(digest),
                 new String(
                         BinaryUtils.hexStrToByteArray(

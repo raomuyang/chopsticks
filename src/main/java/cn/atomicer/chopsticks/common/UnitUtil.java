@@ -1,11 +1,20 @@
 package cn.atomicer.chopsticks.common;
 
 /**
- * Created by rao-mengnan on 2017/7/20.
- * 单位转换工具
+ * The unit tools
+ *
+ * @author rao-mengnan
+ *         on 2017/7/20.
  */
 public class UnitUtil {
 
+    /**
+     * Converts bytes to string with human readable units,
+     * format with {@code String.format("%.2f %2s", size, unit)}
+     *
+     * @param bytes how many bytes
+     * @return converted
+     */
     public static String formatBufferSize(double bytes) {
         String unit = "B";
         double size = bytes;

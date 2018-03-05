@@ -1,18 +1,34 @@
 package cn.atomicer.chopsticks.io;
 
-import javax.imageio.IIOException;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * Created by Rao-Mengnan
- * on 2018/2/27.
+ * Common file tools
+ *
+ * @author Rao Mengnan
+ *         on 2018/2/27.
  */
 public class FileUtils {
 
+    /**
+     * Serialize an object into a byte array and write to file, the type of object must be
+     * implemented {@link java.io.Serializable}, default overwrite
+     *
+     * @param object   target instance
+     * @param filePath target file path
+     * @param <T>      type of object
+     * @return operation result
+     * @throws IOException exception during write target file path
+     */
     public static <T> boolean writeObject(T object, String filePath) throws IOException {
         File cache = new File(filePath);
         if (cache.exists() && !cache.delete()) {
@@ -36,6 +52,14 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Read a local file and deserialize into an object of the specified class
+     *
+     * @param localPath a readable file path
+     * @param <T>       the type of target object
+     * @return an object of T
+     * @throws IOException file read exception
+     */
     @SuppressWarnings("unchecked")
     public static <T> T readLocalObject(String localPath) throws IOException {
         File file = new File(localPath);
@@ -57,6 +81,13 @@ public class FileUtils {
         }
     }
 
+    /**
+     * To determine whether a file to symlink
+     *
+     * @param file must be not null
+     * @return is symlink
+     * @throws IOException the file doesn't exist or file object is null
+     */
     public static boolean isSymlink(File file) throws IOException {
         if (file == null) {
             throw new IOException("File object is null");
@@ -72,7 +103,7 @@ public class FileUtils {
     }
 
     /**
-     * write byte array into file (overwrite)
+     * Write the byte array into file (overwrite)
      *
      * @param path  target path
      * @param name  target file name
@@ -97,16 +128,38 @@ public class FileUtils {
         return true;
     }
 
-    public static void rename(String srcFilePath, String targetPath) throws IOException {
+    /**
+     * Rename file or move file to an existing directory
+     *
+     * @param srcFilePath source file path
+     * @param targetPath  target file path
+     * @throws IOException file not exists or type error
+     */
+    public static void move(String srcFilePath, String targetPath) throws IOException {
         Path source = Paths.get(srcFilePath);
         Path target = Paths.get(targetPath);
         Files.move(source, target);
     }
 
+    /**
+     * Copy file to destination path, preserve file date
+     *
+     * @param source source file
+     * @param dest   destination file
+     * @throws IOException source file not found or destination doesn't support write
+     */
     public static void copy(File source, File dest) throws IOException {
         copy(source, dest, true);
     }
 
+    /**
+     * Copy file to destination path
+     *
+     * @param source           source file
+     * @param dest             destination file
+     * @param preserveFileDate copy file date from source file
+     * @throws IOException source file not found or destination doesn't support write
+     */
     public static void copy(File source, File dest, boolean preserveFileDate) throws IOException {
         if (source.isDirectory()) {
             throw new IOException(String.format("source: not a file [%s] ", source.getPath()));

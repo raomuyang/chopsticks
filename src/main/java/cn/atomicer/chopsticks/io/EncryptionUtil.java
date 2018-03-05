@@ -1,7 +1,12 @@
 package cn.atomicer.chopsticks.io;
 
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -10,15 +15,22 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
 /**
- * Created by rao-mengnan on 2017/6/20.
- * DES加密工具
+ * Encryption tools, support the DES algorithm at present
+ *
+ * @author rao-mengnan
+ *         on 2017/6/20.
  */
 public class EncryptionUtil {
 
     /**
-     * @param message 要加密的字符串
-     * @param key     秘钥
-     * @return 加密字符串
+     * Encrypt string (DES)
+     *
+     * @param message target string
+     * @param key     secret key of encryption/decryption, the key size must be greater than 8
+     * @return encrypted string
+     * @throws BadPaddingException       illegal message content
+     * @throws IllegalBlockSizeException illegal message content
+     * @throws RuntimeException          unsupported encoding exception
      */
     public static String desEncrypt(String message, String key) throws BadPaddingException, IllegalBlockSizeException {
         byte[] result;
@@ -31,11 +43,13 @@ public class EncryptionUtil {
     }
 
     /**
-     * 使用DES加密
+     * Encrypt bytes (DES)
      *
-     * @param message 需要加密数据的byte数组
-     * @param key     秘钥
-     * @return 加密后的byte数组
+     * @param message target byte array
+     * @param key     secret key of encryption/decryption, the key size must be greater than 8
+     * @return encrypted byte array
+     * @throws BadPaddingException       illegal message content
+     * @throws IllegalBlockSizeException illegal message content
      */
 
     public static byte[] desEncrypt(byte[] message, String key) throws BadPaddingException, IllegalBlockSizeException {
@@ -45,9 +59,13 @@ public class EncryptionUtil {
     }
 
     /**
-     * @param key       秘钥
-     * @param hexString 16进制字符串
-     * @return 返回解密后的字符串
+     * Decrypt hex string (DES)
+     *
+     * @param key       secret key of encryption/decryption, the key size must be greater than 8
+     * @param hexString target string, must be a hexadecimal string
+     * @return decrypted string
+     * @throws BadPaddingException       illegal message content
+     * @throws IllegalBlockSizeException illegal message content
      */
     public static String desDecrypt(String hexString, String key) throws BadPaddingException, IllegalBlockSizeException {
         byte[] bytes = BinaryUtils.hexStrToByteArray(hexString);
@@ -55,11 +73,13 @@ public class EncryptionUtil {
     }
 
     /**
-     * 使用DES解密
+     * Decrypt byte array (DES)
      *
-     * @param key     秘钥
-     * @param message 需要解密数据的byte数组
-     * @return 解密后的byte数组
+     * @param key     secret key of encryption/decryption, the key size must be greater than 8
+     * @param message target byte array
+     * @return decrypted byte array
+     * @throws BadPaddingException       illegal message content
+     * @throws IllegalBlockSizeException illegal message content
      */
     public static byte[] desDecrypt(byte[] message, String key) throws BadPaddingException, IllegalBlockSizeException {
 
@@ -69,7 +89,10 @@ public class EncryptionUtil {
 
     /**
      * @param MODE 加密/解密模式
+     *             encryption/decryption mode
      * @param key  秘钥
+     *             secret key of encryption/decryption, the key size must be greater than 8
+     * @return {@link Cipher} instance
      */
     private static Cipher initCipher(int MODE, String key) {
         try {
@@ -89,5 +112,4 @@ public class EncryptionUtil {
             throw new RuntimeException(e);
         }
     }
-
 }

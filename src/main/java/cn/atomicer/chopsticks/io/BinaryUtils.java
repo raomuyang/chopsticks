@@ -12,13 +12,23 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by Rao-Mengnan
- * on 2018/2/27.
+ * The tools of binary process, such as md5, hex, byte array...
+ *
+ * @author Rao-Mengnan
+ *         on 2018/2/27.
  */
 public class BinaryUtils {
 
     private static final char[] HEX = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
+    /**
+     * JDK does not provide the release of MappedByteBuffer, MappedByteBuffer was recovered in full GC, through the
+     * manual release to let it recover, so this method provides a MappedByteBuffer release method
+     *
+     * @param buffer       not released MappedByteBuffer
+     * @param channelClass the class of channel
+     * @throws IOException unmap failed
+     */
     @SuppressWarnings("unchecked")
     public static void unMapBuffer(MappedByteBuffer buffer, Class channelClass) throws IOException {
         if (buffer == null) {
@@ -39,7 +49,14 @@ public class BinaryUtils {
         }
     }
 
-    public static byte[] getFileMD5Digits(File file) throws IOException {
+    /**
+     * Read files through FileChannel and calculate the file md5, support for large files
+     *
+     * @param file target file
+     * @return md5 digest
+     * @throws IOException file read error
+     */
+    public static byte[] getFileMD5Digest(File file) throws IOException {
         FileInputStream inputStream = new FileInputStream(file);
         FileChannel channel = inputStream.getChannel();
         try {
@@ -67,7 +84,13 @@ public class BinaryUtils {
         }
     }
 
-    public static byte[] getStringMD5Digits(String str) {
+    /**
+     * Get the md5 digest of string
+     *
+     * @param str target str
+     * @return byte array of md5 digest
+     */
+    public static byte[] getStringMD5Digests(String str) {
         try {
             MessageDigest messagedigest = MessageDigest.getInstance("MD5");
             messagedigest.update(str.getBytes());
@@ -77,6 +100,12 @@ public class BinaryUtils {
         }
     }
 
+    /**
+     * Byte array to hex string
+     *
+     * @param bytes byte array
+     * @return hex string (low case)
+     */
     public static String buffer2HexStr(byte[] bytes) {
         char[] strMd5 = new char[bytes.length * 2];
         int k = 0;
@@ -90,6 +119,13 @@ public class BinaryUtils {
         return new String(strMd5);
     }
 
+    /**
+     * Direct access to the file byte array (not recommended for large files)
+     *
+     * @param file target file
+     * @return byte array of file
+     * @throws IOException file read exception
+     */
     public static byte[] getBytes(File file) throws IOException {
         if (file == null || !file.exists())
             return null;
@@ -104,6 +140,12 @@ public class BinaryUtils {
         return buffer;
     }
 
+    /**
+     * Hex string to byte array
+     *
+     * @param hexStr hex string: [0-9]|[a-f]|[A-F]
+     * @return byte array of hex string
+     */
     public static byte[] hexStrToByteArray(String hexStr) {
         if (hexStr.length() % 2 != 0) {
             throw new IllegalArgumentException("Input hex string length must be multiple of 2");

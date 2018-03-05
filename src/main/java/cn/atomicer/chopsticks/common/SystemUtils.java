@@ -1,8 +1,10 @@
 package cn.atomicer.chopsticks.common;
 
 /**
- * Created by Rao-Mengnan
- * on 2017/8/11.
+ * Summary of current system and jvm
+ *
+ * @author Rao Mengnan
+ *         on 2017/8/11.
  */
 public class SystemUtils {
     private static String javaRuntime;
@@ -70,11 +72,11 @@ public class SystemUtils {
     private static String getShortName(String name) {
         name = name.toLowerCase();
         if (name.contains("mac")) {
-            return  "mac";
+            return "mac";
         } else if (name.contains("linux")) {
-            return  "linux";
+            return "linux";
         } else if (name.contains("win")) {
-            return  "win";
+            return "win";
         }
         return name;
     }

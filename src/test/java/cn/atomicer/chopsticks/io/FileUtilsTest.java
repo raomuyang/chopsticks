@@ -101,17 +101,17 @@ public class FileUtilsTest {
 
             FileUtils.copy(src, dest);
             assertEquals(src.lastModified(), dest.lastModified());
-            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(src)),
-                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(dest)));
+            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digest(src)),
+                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digest(dest)));
 
             FileUtils.copy(src, dest, true);
             assertEquals(src.lastModified(), dest.lastModified());
-            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(src)),
-                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(dest)));
+            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digest(src)),
+                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digest(dest)));
 
             FileUtils.copy(src, dest, false);
-            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(src)),
-                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digits(dest)));
+            assertEquals(BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digest(src)),
+                    BinaryUtils.buffer2HexStr(BinaryUtils.getFileMD5Digest(dest)));
             assertNotEquals(src.lastModified(), dest.lastModified());
 
 
@@ -132,15 +132,15 @@ public class FileUtilsTest {
     }
 
     @Test
-    public void rename() throws Exception {
+    public void move() throws Exception {
         File src = new File(RESOURCE_PATH + File.separator + "test.file");
         File dest = new File(RESOURCE_PATH + File.separator + "test.file-2");
         File tmpDir = new File(RESOURCE_PATH + File.separator + "tmp");
         tmpDir.mkdirs();
         try {
             FileUtils.copy(src, dest, true);
-            File renamed = new File(RESOURCE_PATH + "/tmp/rename");
-            FileUtils.rename(dest.getPath(), renamed.getPath());
+            File renamed = new File(RESOURCE_PATH + "/tmp/move");
+            FileUtils.move(dest.getPath(), renamed.getPath());
             assertFalse(dest.exists());
             assertTrue(renamed.exists());
             renamed.deleteOnExit();

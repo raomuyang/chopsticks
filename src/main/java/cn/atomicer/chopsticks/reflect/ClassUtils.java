@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Rao-Mengnan
- * on 2017/10/23.
+ * Class conversion tools
+ *
+ * @author Rao Mengnan
+ *         on 2017/10/23.
  */
 public class ClassUtils {
 
@@ -31,11 +33,13 @@ public class ClassUtils {
         CLASS_MAP.put("Boolean[]", Boolean[].class);
     }
 
+
     /**
-     * make object coerced into target class
+     * Make object coerced into target class
      *
      * @param o     src object
-     * @param clazz Target class
+     * @param clazz class of T
+     * @param <T>   the type of the desired object
      * @return new object (T)
      */
     @SuppressWarnings("unchecked")
@@ -44,16 +48,26 @@ public class ClassUtils {
         return JsonUtils.mapToBean(o.toString(), clazz);
     }
 
+    /**
+     * Get class of type name from the string, via default class loader
+     *
+     * @param type type name
+     * @return class of type
+     * @throws ClassNotFoundException not found this class
+     */
     public static Class str2Class(String type) throws ClassNotFoundException {
         return str2Class(type, null);
     }
+
     /**
+     * Get class of type name from the string, via custom class loader
+     *
      * @param type        name of class. If it is the base type,
      *                    you can get class via long name or short name:
      *                    type: "String" or type: "java.lang.String"
      * @param classLoader default: jvm default class loader
      * @return target class
-     * @throws ClassNotFoundException no such class
+     * @throws ClassNotFoundException not found this class
      */
     public static Class str2Class(String type, ClassLoader classLoader) throws ClassNotFoundException {
         if (type == null) {
@@ -79,7 +93,7 @@ public class ClassUtils {
     }
 
     /**
-     * Java base type
+     * Base types of java
      *
      * @param type {@link java.lang} {@link java.util.Date}
      * @return {@link Number} or {@link java.util.Date}
