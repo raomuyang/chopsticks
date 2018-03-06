@@ -16,7 +16,9 @@
 
     <packaging>jar</packaging>
     <description>
-        Common tools.
+        A common toolkit, provides a variety of tools such as
+        file io, encryption and decryption, reflection call, etc.,
+        can be used for rapid development
     </description>
     <name>chopsticks</name>
     <url>https://github.com/raomuyang/chopsticks</url>
