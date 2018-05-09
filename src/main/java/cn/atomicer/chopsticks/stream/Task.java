@@ -1,6 +1,6 @@
 package cn.atomicer.chopsticks.stream;
 
-import cn.atomicer.chopsticks.function.Action1;
+import cn.atomicer.chopsticks.function.Action;
 
 import static cn.atomicer.chopsticks.common.AssertUtils.assertNotNull;
 
@@ -10,9 +10,9 @@ import static cn.atomicer.chopsticks.common.AssertUtils.assertNotNull;
  */
 public class Task<T> {
     private Stream stream = new Stream();
-    private Action1<T> action;
+    private Action<T> action;
 
-    public static <T> Task<T> create(Action1<T> action) {
+    public static <T> Task<T> create(Action<T> action) {
         Task<T> t = new Task<>();
         t.action = action;
         return t;
@@ -22,13 +22,13 @@ public class Task<T> {
         return this.stream;
     }
 
-    public void call(T t) {
+    public void call(T t) throws Exception {
 
         assertNotNull(t, "object is null");
         try {
             Task<T> task = stream.next();
             while (task != null) {
-                task.action.doAction(t);
+                task.action.run(t);
                 task = stream.next();
             }
             if (stream.doOnSuccess != null) {
@@ -53,7 +53,7 @@ public class Task<T> {
             head = Task.this;
         }
 
-        public Stream onNext(Action1<T> action) {
+        public Stream onNext(Action<T> action) {
             assertNotNull(action, "function is null");
             Task<T> task = Task.create(action);
             if (head.action == null) {
@@ -81,7 +81,7 @@ public class Task<T> {
             return this;
         }
 
-        public void start(T t) {
+        public void start(T t) throws Exception {
             assertNotNull(t, "object is null");
             Task.this.call(t);
         }
