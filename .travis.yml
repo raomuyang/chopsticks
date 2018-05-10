@@ -13,6 +13,8 @@ env:
   global:
     secure: EP6oF5mpnLM8Uujaqmm9vkaQPXWdOa6zwLEGJcizrPSYkO9R6VDdnIttLOcYqFuXnv1kbuukfkhw0RqM1oMsfnlNTDk7OvngSjQ3eqk1YgcRr8Serhhbzsfj6etj2FvxEjLt0bhheWib1lGoNK0w7uUQ4XD9CfI+G8lB9AgI7xOgPuzxuf2lQqQ8zPr22keydIbAhDIxZwYs2gYZkaY+ryRjJpGn3+rnj6S+Cy1BdKGfkvcO/qczXQHyMKH9jDH1NVN00wdVQ07pkFKKgXe+ne2tyQu8XDXQIRdtp1yWpzGHuW40qpSOTneRfOxekD9dfjdObYzoTWsgtP7JC3cF+Lq5iMlSPclxU+ongEUov5XuKFjMJsCzaWU6hJc3IZInxvYNptiQPP/la96Oqi6R12OmPGtzA78+S3HrAiZ2vuRywzdZBEV1gYCIuv+B/nt7gdqcTJB6VPl6vnHcH8FNhyhSzFE73bOGY4H+ConC2IWjPM/gg9yV3UwzEewPc2aQxcywX19xkjebo2YyHB8Vy3SW9wU6BBG8FJeTdPZBnvrQTPeL2+7Clh9eD62gUV6Uhxmr6gE2u1MIVw4Kluxp9wzXS0ISCGcAH6XgaJ7TUh5pBBXxzr+xo2W16EVhJs+PrUJ13N3nmeq4onEPZUkrLJuavTQSNOHA0amhxTxdbS0=
 
+install:
+  - export SOURCE=`pwd`
 before_deploy:
   - mvn clean package
 deploy:
@@ -20,9 +22,9 @@ deploy:
   api_key: $GITHUB_TOKEN
   skip-cleanup: true
   file:
-    - target/chopsticks-2.0.0.jar
-    - target/chopsticks-2.0.0-sources.jar
-    - target/chopsticks-2.0.0-javadoc.jar
+    - $SOURCE/target/chopsticks-2.0.0.jar
+    - $SOURCE/target/chopsticks-2.0.0-sources.jar
+    - $SOURCE/target/chopsticks-2.0.0-javadoc.jar
   on:
     tags: true
 
