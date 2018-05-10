@@ -9,7 +9,7 @@ import java.util.List;
 /**
  *
  *  Examples:
- *  This code show how to process data in pipeline <pre>
+ *  This code show how to process data in pipeline <pre>{@code
  *         Pipeline<Integer> pipeline = new Pipeline<>();
  *         // '0' -> 0 -> 0 + 1 -> 1 / 1 -> 1 - 1 -> 0 + 1 -> 0
  *         pipeline
@@ -20,8 +20,9 @@ import java.util.List;
  *              .addPipe(integer -> (Integer) integer + 1);
  *
  *         Integer res = pipeline.process("0");
- *         assertEquals(1, res.intValue());</pre>
- *  This code show how to catch exceptions in pipeline <pre>
+ *         assertEquals(1, res.intValue());
+ *  }</pre>
+ *  This code show how to catch exceptions in pipeline <pre>{@code
  *        Pipeline<Integer> pipeline = new Pipeline<>();
  *        // '0' -> 0 -> 0 + 1 -> -> 1 - 1 ->  1 / 0 -> throw
  *        pipeline
@@ -33,7 +34,7 @@ import java.util.List;
  *        pipeline.addErrorPipe(throwable -> null);
  *        pipeline.process("0");
  *
- * </pre>
+ * }</pre>
  * @author Rao Mengnan
  *         on 2018/5/9.
  */
