@@ -13,7 +13,7 @@ import java.util.Locale;
  * @author Rao Mengnan
  *         on 2016/6/25.
  */
-public class DateUtils {
+public class Dates {
 
     public static final String DEFAULT_DATE_FORMAT = "MMM d yyyy, HH:mm:ss";
 

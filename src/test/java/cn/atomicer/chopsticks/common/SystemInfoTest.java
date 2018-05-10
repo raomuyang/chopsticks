@@ -8,10 +8,10 @@ import static org.junit.Assert.*;
  * Created by Rao-Mengnan
  * on 2018/2/28.
  */
-public class SystemUtilsTest {
+public class SystemInfoTest {
     @Test
     public void test() throws Exception {
-        String summery = SystemUtils.summary();
+        String summery = SystemDescription.summary();
         assertTrue(summery.contains("javaVersion"));
         assertTrue(summery.contains("country"));
         assertTrue(summery.contains("arch"));

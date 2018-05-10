@@ -50,21 +50,21 @@ public class JsonUtilsTest {
     @Test
     public void mapToBean() throws Exception {
         String json = gson.toJson(demo);
-        Demo demo2 = JsonUtils.mapToBean(json, Demo.class);
+        Demo demo2 = JsonTool.mapToBean(json, Demo.class);
         assertEquals(demo, demo2);
 
         JsonElement element = gson.toJsonTree(demo);
-        Demo demo3 = JsonUtils.mapToBean(element, Demo.class);
+        Demo demo3 = JsonTool.mapToBean(element, Demo.class);
         assertEquals(demo, demo3);
     }
 
     @Test
     public void mapToList() throws Exception {
         String json = gson.toJson(demo);
-        List list = JsonUtils.mapToList(String.format("[%s, %s, %s]", json, json, 1));
+        List list = JsonTool.mapToList(String.format("[%s, %s, %s]", json, json, 1));
         assertEquals(3, list.size());
         assertTrue(Number.class.isAssignableFrom(list.get(2).getClass()));
-        Map map = JsonUtils.mapToBean(json, Map.class);
+        Map map = JsonTool.mapToBean(json, Map.class);
         assertEquals(map, list.get(0));
         assertEquals(map, list.get(1));
     }
@@ -77,7 +77,7 @@ public class JsonUtilsTest {
         try (FileWriter writer = new FileWriter(tmp)) {
             writer.write(json);
             writer.flush();
-            Demo demo2 = JsonUtils.loadJsonFile(tmp.getAbsolutePath(), Demo.class);
+            Demo demo2 = JsonTool.loadJsonFile(tmp.getAbsolutePath(), Demo.class);
             assertEquals(demo, demo2);
         } finally {
             tmp.delete();
@@ -86,12 +86,12 @@ public class JsonUtilsTest {
 
     @Test
     public void getJsonElement() throws Exception {
-        JsonElement e1 = JsonUtils.getJsonElement(demo);
+        JsonElement e1 = JsonTool.getJsonElement(demo);
 
         String json = gson.toJson(demo);
-        JsonElement e2 = JsonUtils.getJsonElement(json);
+        JsonElement e2 = JsonTool.getJsonElement(json);
 
-        JsonElement e3 = JsonUtils.getJsonElement(e2);
+        JsonElement e3 = JsonTool.getJsonElement(e2);
 
         assertEquals(e1, e2);
         assertEquals(e2, e3);
@@ -100,11 +100,11 @@ public class JsonUtilsTest {
     @Test
     public void getJsonArray() throws Exception {
         String json = gson.toJson(demo);
-        List list = JsonUtils.mapToList(String.format("[%s, %s, %s]", json, json, 1));
-        JsonArray array = JsonUtils.getJsonArray(list);
+        List list = JsonTool.mapToList(String.format("[%s, %s, %s]", json, json, 1));
+        JsonArray array = JsonTool.getJsonArray(list);
         assertEquals(3, array.size());
 
-        array = JsonUtils.getJsonArray(array);
+        array = JsonTool.getJsonArray(array);
         assertEquals(3, array.size());
     }
 

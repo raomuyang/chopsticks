@@ -1,9 +1,9 @@
 package cn.atomicer.chopsticks.function;
 
 /**
- * Created by Rao-Mengnan
- * on 2017/8/7.
+ * @author Rao Mengnan
+ *         on 2018/5/9.
  */
-public interface Action<T> {
-    void run(T e) throws Exception;
+public interface Action {
+    void run() throws Exception;
 }

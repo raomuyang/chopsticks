@@ -6,7 +6,7 @@ package cn.atomicer.chopsticks.common;
  * @author rao-mengnan
  *         on 2017/7/20.
  */
-public class UnitUtil {
+public class Units {
 
     /**
      * Converts bytes to string with human readable units,

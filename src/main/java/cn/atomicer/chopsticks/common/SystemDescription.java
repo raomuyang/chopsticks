@@ -6,7 +6,7 @@ package cn.atomicer.chopsticks.common;
  * @author Rao Mengnan
  *         on 2017/8/11.
  */
-public class SystemUtils {
+public class SystemDescription {
     private static String javaRuntime;
     private static String javaVersion;
     private static String country;

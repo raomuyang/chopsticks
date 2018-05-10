@@ -20,7 +20,7 @@ import java.security.spec.InvalidKeySpecException;
  * @author rao-mengnan
  *         on 2017/6/20.
  */
-public class EncryptionUtil {
+public class EncryptionTools {
 
     /**
      * Encrypt string (DES)

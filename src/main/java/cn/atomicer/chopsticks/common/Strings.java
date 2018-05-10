@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * @author rao-mengnan
  *         on 2017/3/17.
  */
-public class StringUtils {
+public class Strings {
     private static final String FULL_WIDTH_CHARACTER = "[\\uFF00-\\uFFFF]|[\\u3000-\\u303F]";
     private static final String FULL_WIDTH_CHARACTER_REG = ".*?(" + FULL_WIDTH_CHARACTER + "+).*?";
     private static final Pattern FULL_WIDTH_CHARACTERS_PATTERN = Pattern.compile(FULL_WIDTH_CHARACTER_REG);

@@ -19,9 +19,9 @@ import java.util.List;
  *         on 16-9-12.
  */
 
-public class JsonUtils {
+public class JsonTool {
 
-    private JsonUtils() {
+    private JsonTool() {
     }
 
     /**

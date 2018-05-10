@@ -1,6 +1,6 @@
 package cn.atomicer.chopsticks.reflect;
 
-import cn.atomicer.chopsticks.common.JsonUtils;
+import cn.atomicer.chopsticks.common.JsonTool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class ClassUtils {
     @SuppressWarnings("unchecked")
     public static <T> T conversion(Object o, Class<T> clazz) {
         if (clazz.isAssignableFrom(o.getClass())) return (T) o;
-        return JsonUtils.mapToBean(o.toString(), clazz);
+        return JsonTool.mapToBean(o.toString(), clazz);
     }
 
     /**

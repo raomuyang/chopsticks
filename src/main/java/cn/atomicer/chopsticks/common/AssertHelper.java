@@ -4,7 +4,7 @@ package cn.atomicer.chopsticks.common;
  * @author Rao Mengnan
  *         on 2018/2/27.
  */
-public class AssertUtils {
+public class AssertHelper {
 
     public static boolean isNullOrEmpty(String value) {
         return value == null || value.length() == 0;
