@@ -16,9 +16,9 @@ import static cn.atomicer.chopsticks.common.AssertHelper.assertNotNull;
  *
  * This is the main class for perform a series of actions.
  *
- * <p>Here is an example of how to establish a stream to perform:
+ * Here is an example of how to establish a stream to perform:
  *
- * <pre>
+ * <pre>{@code
  *
  * final List<Integer> result = new ArrayList<>();
  *
@@ -38,7 +38,7 @@ import static cn.atomicer.chopsticks.common.AssertHelper.assertNotNull;
  *      .accept(0);
  *
  * assertEquals(Arrays.asList(1, 2, 3, 4), result);
- * </pre></p>
+ * }</pre>
  *
  * @author Rao-Mengnan
  * create on 2017/8/7.
