@@ -42,12 +42,12 @@ public class Pipeline<T> {
     private List<Function> pipelines;
     private List<Function<? extends Throwable, ?>> errorPipeline;
 
-    Pipeline() {
+    public Pipeline() {
         this.pipelines = new LinkedList<>();
         this.errorPipeline = new LinkedList<>();
     }
 
-    Pipeline addPipe(Function pipeline) {
+    public Pipeline addPipe(Function pipeline) {
         this.pipelines.add(pipeline);
         return this;
     }
