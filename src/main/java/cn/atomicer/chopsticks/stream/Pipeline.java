@@ -52,7 +52,7 @@ public class Pipeline<T> {
         return this;
     }
 
-    Pipeline addErrorPipe(Function<? extends Throwable, ?> pipeline) {
+    public Pipeline addErrorPipe(Function<? extends Throwable, ?> pipeline) {
         this.errorPipeline.add(pipeline);
         return this;
     }
