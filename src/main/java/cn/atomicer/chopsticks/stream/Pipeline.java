@@ -39,33 +39,33 @@ import java.util.List;
  *         on 2018/5/9.
  */
 public class Pipeline<T> {
-    private List<Function> pipelines;
-    private List<Function<? extends Throwable, ?>> errorPipeline;
+    private List<Function> pipes;
+    private List<Function<? extends Throwable, ?>> errorPipes;
 
     public Pipeline() {
-        this.pipelines = new LinkedList<>();
-        this.errorPipeline = new LinkedList<>();
+        this.pipes = new LinkedList<>();
+        this.errorPipes = new LinkedList<>();
     }
 
     public Pipeline addPipe(Function pipeline) {
-        this.pipelines.add(pipeline);
+        this.pipes.add(pipeline);
         return this;
     }
 
     public Pipeline addErrorPipe(Function<? extends Throwable, ?> pipeline) {
-        this.errorPipeline.add(pipeline);
+        this.errorPipes.add(pipeline);
         return this;
     }
 
 
     @SuppressWarnings("unchecked")
     public T process(Object obj) throws Throwable {
-        if (pipelines.size() == 0) return null;
+        if (pipes.size() == 0) return null;
         DataTransform dataTransform = new DataTransform(obj);
 
         try {
-            for (Function pipeline: pipelines) {
-                dataTransform.accept(pipeline);
+            for (Function pipe: pipes) {
+                dataTransform.accept(pipe);
             }
             return (T) dataTransform.value;
         } catch (Throwable e) {
@@ -76,12 +76,12 @@ public class Pipeline<T> {
 
     private void processError(Throwable e) throws Throwable {
         if (e == null) return;
-        if (errorPipeline.size() == 0) throw e;
+        if (errorPipes.size() == 0) throw e;
 
         try {
 
             DataTransform pipe = new DataTransform(e);
-            for (Function pipeline: errorPipeline) {
+            for (Function pipeline: errorPipes) {
                 pipe.accept(pipeline);
             }
         } catch (Throwable t) {
