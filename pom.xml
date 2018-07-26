@@ -4,12 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
-    </parent>
-
     <groupId>cn.atomicer.sikong</groupId>
     <artifactId>chopsticks</artifactId>
     <version>2.0.2</version>
@@ -69,6 +63,38 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>ossrh</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>LATEST</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <licenses>
         <license>
             <name>The MIT License</name>
@@ -76,12 +102,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <scm>
-        <tag>master</tag>
-        <url>git@github.com:raomuyang/chopsticks.git</url>
-        <connection>scm:git:git@github.com:raomuyang/chopsticks.git</connection>
-        <developerConnection>scm:git:git@github.com:raomuyang/chopsticks.git</developerConnection>
-    </scm>
+
     <developers>
         <developer>
             <name>chopsticks</name>
