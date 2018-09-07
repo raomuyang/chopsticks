@@ -82,7 +82,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>LATEST</version>
+                        <version>1.6.7</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
@@ -98,14 +98,14 @@
     <licenses>
         <license>
             <name>The MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <url>https://raw.githubusercontent.com/raomuyang/chopsticks/master/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
 
     <developers>
         <developer>
-            <name>chopsticks</name>
+            <name>raomengnan</name>
             <email>raomengnan@gmail.com</email>
             <organization>atomicer</organization>
         </developer>
