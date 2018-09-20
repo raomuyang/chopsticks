@@ -10,6 +10,6 @@ maven:
 <dependency>
   <groupId>cn.atomicer.sikong</groupId>
   <artifactId>chopsticks</artifactId>
-  <version>1.0.1</version>
+  <version>2.0.3</version>
 </dependency>
 ```
